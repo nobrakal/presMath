@@ -5,10 +5,241 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{bussproofs}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem*{cor}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{conj}{Conjecture}[section]
+\newtheorem{exmp}{Example}[section]
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{notation}{Notation}
+
 \title{Coq, théorie de la démonstration et CompCert}
 \author{Pierre Gimalac, Maxime Flin, Alexandre Moine}
 \begin{document}
 \maketitle
+
+\section{Théorie de la démonstration}
+\begin{frame}
+\frametitle{La notion de séquent}
+\begin{defn}
+Un \textbf{séquent} est un couple noté $\Gamma \vdash F$ où
+\begin{itemize}
+	\item $\Gamma$ est un ensemble fini de formules. On l'appelle contexte
+	\item $F$ est une formule. On l'appelle conclusion
+\end{itemize}
+\end{defn}
+
+\begin{rem}
+Les formules de $\Gamma$ et $F$ ne sont pas nécessairement closes.
+\end{rem}
+\end{frame}
+
+\begin{frame}
+\frametitle{La notion de séquent}
+\begin{defn}
+Un séquent $\Gamma \vdash F$ est \textbf{démontrable} s'il existe une démonstration ayant ses hypothèses dans $\Gamma$ et $F$ pour conclusion.
+\end{defn}
+
+\begin{rem}
+\begin{itemize}
+	\item Quand on écrit $\Gamma \vdash F$ on considère que ce séquent est démontrable.
+	\item Quand un séquent n'est pas prouvable, on écrit $Gamme \nvdash F$.
+	\item Si $\vdash F$ on dit que $F$ est une tautologie.
+	\item Si $\nvdash F$ on dit que $F$ est une antilogie.
+\end{itemize}
+\end{rem}
+\end{frame}
+
+\begin{frame}
+\frametitle{Définition de démonstration formelle}
+\begin{defn}
+Une \textbf{démonstration} est un arbre ayant pour feuille des séquents.
+
+Tous les arbres de ce type ne sont bien sûr pas de démonstrations. On les construit l'ensemble des démonstration formelles par induction comme suit.
+\end{defn}
+\end{frame}
+
+\begin{frame}
+\frametitle{Règles d'induction}
+\begin{defn}[L'axiome]
+pour toute théorie $\Gamma$ et formule $A$
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{ax}
+\UnaryInfC{$\Gamma,A\vdash A$}
+\end{prooftree}
+\end{defn}
+
+\begin{defn}[L'affaiblissement]
+Pour toute théorie $\Gamma$ et formule $A$
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash A$}
+\RightLabel{aff}
+\UnaryInfC{$\Gamma,B\vdash A$}
+\end{prooftree}
+\end{defn}
+\end{frame}
+
+\begin{frame}
+Pour toute théorie $\Gamma$ et formules $A, B$
+\frametitle{Règles d'induction}
+\begin{defn}[Introduction de l'implication]
+\begin{prooftree}
+\AxiomC{$\Gamma, A\vdash B$}
+\RightLabel{$\rightarrow_i$}
+\UnaryInfC{$\Gamma\vdash A \rightarrow B$}
+\end{prooftree}
+\end{defn}
+
+\begin{defn}[Introduction de la conjonction]
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash A$}
+\AxiomC{$\Gamma \vdash B$}
+\RightLabel{$\wedge_i$}
+\BinaryInfC{$\Gamma\vdash A \rightarrow B$}
+\end{prooftree}
+\end{defn}
+
+\begin{defn}[Introduction de la disjonction]
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash A$}
+\RightLabel{$\vee_i$}
+\UnaryInfC{$\Gamma\vdash A \vee B$}
+\end{prooftree}
+\end{defn}
+\end{frame}
+
+\begin{frame}
+\frametitle{Règles d'induction}
+\begin{defn}[Élimination de l'implication]
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash A \rightarrow B$}
+\AxiomC{$\Gamma\vdash A$}
+\RightLabel{$\rightarrow_e$}
+\BinaryInfC{$\Gamma\vdash B$}
+\end{prooftree}
+\end{defn}
+
+\begin{defn}[Élimination de la conjonction]
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash A\wedge B$}
+\RightLabel{$\wedge_e$}
+\UnaryInfC{$\Gamma\vdash A$}
+\end{prooftree}
+\end{defn}
+
+\begin{defn}[Élimination de la disjonction]
+Pour toute théorie $\Gamma$ et formules $A, B, C$
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash A\vee B$}
+\AxiomC{$\Gamma, A \vdash C$}
+\AxiomC{$\Gamma, B \vdash C$}
+\RightLabel{$\vee_i$}
+\TrinaryInfC{$\Gamma\vdash C$}
+\end{prooftree}
+\end{defn}
+\end{frame}
+
+\begin{frame}
+\frametitle{Règles d'induction}
+\begin{defn}[Élimination par l'absurde]
+\begin{prooftree}
+\AxiomC{$\Gamma,\neg A\vdash \perp$}
+\RightLabel{$\perp_e$}
+\UnaryInfC{$\Gamma\vdash A$}
+\end{prooftree}
+\end{defn}
+\end{frame}
+
+\begin{frame}
+\frametitle{Règles d'induction}
+\begin{defn}[Introduction du quantificateur universel]
+Si $x$ n'est libre dans aucune formule de $\Gamma$
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash A$}
+\RightLabel{$\forall_i$}
+\UnaryInfC{$\Gamma\vdash\forall x A$}
+\end{prooftree}
+\end{defn}
+
+\begin{defn}[Introduction du quantificateur existentiel]
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash A[x:=t]$}
+\RightLabel{$\exists_i$}
+\UnaryInfC{$\Gamma\vdash\exists x~A$}
+\end{prooftree}
+\end{defn}
+\end{frame}
+
+\begin{frame}
+\frametitle{Règles d'induction}
+\begin{defn}[Élimination du quantificateur universel]
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash\forall x~A$}
+\RightLabel{$\forall_e$}
+\UnaryInfC{$\Gamma\vdash A[x:=t]$}
+\end{prooftree}
+\end{defn}
+
+\begin{defn}[Introduction du quantificateur existentiel]
+Si $x$ n'est libre ni dans $C$ ni dans aucune formule de $\Gamma$
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash \exists x~A$}
+\AxiomC{$\Gamma,A\vdash C$}
+\RightLabel{$\exists_e$}
+\BinaryInfC{$\Gamma\vdash C$}
+\end{prooftree}
+\end{defn}
+\end{frame}
+
+\begin{frame}
+\begin{defn}[Introduction de l'égalité]
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{$=_i$}
+\UnaryInfC{$\Gamma\vdash t=t$}
+\end{prooftree}
+\end{defn}
+
+\begin{defn}[Élimination de l'égalité]
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash A[x:=t]$}
+\AxiomC{$\Gamma\vdash t=u$}
+\RightLabel{$=_e$}
+\BinaryInfC{$\Gamma\vdash A[x:=u]$}
+\end{prooftree}
+\end{defn}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple de démonstration formelle}
+On considère $\Gamma = \left\{\forall x~H(x)\rightarrow M(x), H(s)\right\}$
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{ax}
+\UnaryInfC{$\Gamma\vdash \forall x~H(x)\rightarrow M(x)$}
+\RightLabel{$\forall_e$}
+\UnaryInfC{$\Gamma\vdash H(s)\rightarrow M(s)$}
+
+\AxiomC{}
+\RightLabel{ax}
+\UnaryInfC{$\Gamma\vdash H(s)$}
+\RightLabel{$\rightarrow_e$}
+\BinaryInfC{$\Gamma\vdash M(s)$}
+\end{prooftree}
+
+C'est un syllogisme !
+
+\end{frame}
 
 \begin{frame}
 \frametitle{Compcert - Introduction}
