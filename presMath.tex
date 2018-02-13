@@ -18,12 +18,12 @@
 \newtheorem{conj}{Conjecture}[section]
 \newtheorem{exmp}{Example}[section]
 
-\theoremstyle{remark}
-\newtheorem*{rem}{Remark}
+\theoremstyle{Remarque}
+\newtheorem*{rem}{Remarque}
 \newtheorem*{notation}{Notation}
 
 \title{Coq, théorie de la démonstration et CompCert}
-\author{Pierre Gimalac, Maxime Flin, Alexandre Moine}
+\author{Maxime Flin, Pierre Gimalac, Alexandre Moine}
 \begin{document}
 \maketitle
 
@@ -105,7 +105,7 @@ Pour toute théorie $\Gamma$ et formules $A, B$
 \AxiomC{$\Gamma\vdash A$}
 \AxiomC{$\Gamma \vdash B$}
 \RightLabel{$\wedge_i$}
-\BinaryInfC{$\Gamma\vdash A \rightarrow B$}
+\BinaryInfC{$\Gamma\vdash A \wedge B$}
 \end{prooftree}
 \end{defn}
 
