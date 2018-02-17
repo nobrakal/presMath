@@ -27,6 +27,56 @@
 \begin{document}
 \maketitle
 
+\begin{frame}
+\frametitle{Logique d'ordre supérieur}
+Logique du premier ordre permet de quantifier seulement des objets du premier ordres (variables, constantes) mais pas des objets comme des ensembles, des groupes,etc... qui sont d'ordre supérieur.
+\newline
+\newline
+``Toute partie non vide de $\mathbb{N}$ admet un plus petit élément``:
+\[ \forall X \left(\neg =(X, \emptyset)\rightarrow\exists p~(X(p)\wedge\forall n~(X(x)\rightarrow \leq(p, n)))\right)\]
+\end{frame}
+
+\begin{frame}
+\frametitle{Sortes}
+\begin{defn}
+On choisit $\mathcal{S}_0$ qu'on appellera \textit{ensemble de sortes de base} et qui ne contient pas la sorte particulière $o$. On définit l'ensemble $\mathcal{S}$ des sortes par la grammaire:
+
+\[ \mathcal{S} = o~|~\mathcal{S}_0~|~\mathcal{S}\rightarrow\mathcal{S} \]
+\end{defn}
+
+\begin{rem}
+\begin{itemize}
+\item La sorte $o$ est la sorte des formules
+\item On note $\omega$ la sorte des entiers. La sorte $\omega \rightarrow \omega$ désigne la sorte des fonctions de $\mathbb{Z}$ dans lui même.
+\item Contrairement à la logique du premier ordre les termes et les termes sont tout deux des formules mais pas de la même sorte.
+\end{itemize}
+\end{rem}
+\end{frame}
+
+\begin{frame}
+\frametitle{Un langage d'ordre supérieur}
+\begin{defn}
+Un \textit{langage d'ordre supérieur} est défini pour un ensemble de sortes $\mathcal{S}$ et est l'ensemble des couples $(c,s)$ où $c$ est un symbole de constante et $s$ une sorte.
+\end{defn}
+
+\begin{exmp}
+Un langage d'ordre supérieur pour décrire l'arithmétique contiendrait le couple
+\[ \left(+, \omega \rightarrow \omega \rightarrow \omega\right) \]
+\end{exmp}
+\end{frame}
+
+\begin{frame}
+\frametitle{Logique d'ordre supérieur}
+\begin{defn}
+Une \textit{Logique d'ordre supérieur} est un triplet $(\mathcal{S}_0, \mathcal{L}, \mathcal{G})$ où
+\begin{itemize}
+\item $\mathcal{S}_0$ est l'ensemble des sortes de base
+\item $\mathcal{L}$ est le langage d'ordre supérieur sur un ensemble de sortes $\mathcal{S}$ associé
+\item $\mathcal{G}$ est un sous ensemble de $\mathcal{S}$. Il détermine l'ensemble des sortes que l'on peut quantifier
+\end{itemize}
+\end{defn}
+\end{frame}
+
 \section{Théorie de la démonstration}
 \begin{frame}
 \frametitle{La notion de séquent}
