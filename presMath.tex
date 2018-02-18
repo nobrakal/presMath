@@ -1,4 +1,7 @@
 \documentclass[11pt,a4paper]{beamer}
+
+\usetheme{metropolis}
+
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
 \usepackage[T1]{fontenc}
@@ -8,25 +11,27 @@
 \usepackage{bussproofs}
 
 \theoremstyle{plain}
-\newtheorem{thm}{Theorem}[section]
-\newtheorem{lem}[thm]{Lemma}
+\newtheorem{thm}{Théorème}[section]
+\newtheorem{lem}[thm]{Lemme}
 \newtheorem{prop}[thm]{Proposition}
-\newtheorem*{cor}{Corollary}
+\newtheorem*{cor}{Corollaire}
 
 \theoremstyle{definition}
-\newtheorem{defn}{Definition}[section]
+\newtheorem{defn}{Définition}[section]
 \newtheorem{conj}{Conjecture}[section]
-\newtheorem{exmp}{Example}[section]
+\newtheorem{exmp}{Exemple}[section]
 
-\theoremstyle{Remarque}
+\theoremstyle{remark}
 \newtheorem*{rem}{Remarque}
 \newtheorem*{notation}{Notation}
 
 \title{Coq, théorie de la démonstration et CompCert}
-\author{Maxime Flin, Pierre Gimalac, Alexandre Moine}
+\author{Pierre Gimalac, Maxime Flin, Alexandre Moine}
+
 \begin{document}
 \maketitle
 
+\section{Logique du premier ordre et d'ordre supérieur}
 \begin{frame}
 \frametitle{Logique d'ordre supérieur}
 Logique du premier ordre permet de quantifier seulement des objets du premier ordres (variables, constantes) mais pas des objets comme des ensembles, des groupes,etc... qui sont d'ordre supérieur.
@@ -77,6 +82,60 @@ Une \textit{Logique d'ordre supérieur} est un triplet $(\mathcal{S}_0, \mathcal
 \end{defn}
 \end{frame}
 
+\begin{frame}
+\frametitle{$\beta$-équivalence}
+\begin{defn}[$\beta$-réduction]
+On dit que $e$ se \textbf{$\beta$-réduit} à $e'$ si $e'$ est obtenue à partir de $e$ en remplaçant une sous expression $(x\rightarrow t)(u)$ par l'expression $t[x:=u]$.
+\end{defn}
+
+\begin{defn}[$\beta$-équivalence]
+Deux expressions sont \textbf{$\beta$-équivalentes} si elles se $\beta$-réduisent, en une ou plusieurs étapes, à la même expression.
+\end{defn}
+
+\begin{thm}
+Toute expression est égale à une unique expression ne contenant pas de sous expressions de la forme $(x\rightarrow t)(u)$
+\end{thm}
+\end{frame}
+
+\section{Lambda calcul}
+\begin{frame}
+\frametitle{Lambda calcul}
+\begin{defn}
+On construit l'ensemble des $\lambda$-termes $\Lambda$ tel que
+\begin{itemize}
+\item Pour toute variable $x$, $x\in\Lambda$
+\item Pour toute variable $x$ et $M\in\Lambda$, $(\lambda x.M)\in\Lambda$
+\item Pour tout $M,N\in\Lambda$, $(M~N)\in\Lambda$
+\end{itemize}
+\end{defn}
+
+\begin{notation}
+\begin{itemize}
+\item $M~N$ désigne $(M~N)$
+\item $M~N~P$ désigne $((M~N)~P)$
+\item $\lambda x.M~N$ désigne $\lambda x.(M~N)$
+\item $\lambda xyz.M$ désigne $\lambda x.\lambda y. \lambda z. M$
+\end{itemize}
+\end{notation}
+\end{frame}
+
+\begin{frame}
+\frametitle{$\alpha$-conversion, $\beta$-réduction}
+\begin{defn}[$\alpha$-conversion]
+Une $\alpha$-conversion est un changement de nom pour une abstraction. On change le nom de la variable partout où elle est correspond à cette abstraction et pour un nom de variable qui n'est pas abstrait.
+\end{defn}
+
+\begin{defn}[$\beta$-réduction]
+La $\beta$-réduction traduit l'idée d'appliquer la fonction décrite par une abstraction. Ainsi, $(\lambda x.E)~E'\rightarrow_\beta E[x:=E']$ 
+\end{defn}
+
+\begin{defn}[$\beta$-équivalence]
+On dit que deux $\lambda$-termes sont équivalents quand ils se $\beta$-réduisent au même $\lambda$-terme.
+\end{defn}
+\end{frame}
+
+\section{Transformation de Curry-Howard}
+
 \section{Théorie de la démonstration}
 \begin{frame}
 \frametitle{La notion de séquent}
@@ -102,7 +161,7 @@ Un séquent $\Gamma \vdash F$ est \textbf{démontrable} s'il existe une démonst
 \begin{rem}
 \begin{itemize}
 	\item Quand on écrit $\Gamma \vdash F$ on considère que ce séquent est démontrable.
-	\item Quand un séquent n'est pas prouvable, on écrit $Gamme \nvdash F$.
+	\item Quand un séquent n'est pas prouvable, on écrit $\Gamma \nvdash F$.
 	\item Si $\vdash F$ on dit que $F$ est une tautologie.
 	\item Si $\nvdash F$ on dit que $F$ est une antilogie.
 \end{itemize}
@@ -155,7 +214,7 @@ Pour toute théorie $\Gamma$ et formules $A, B$
 \AxiomC{$\Gamma\vdash A$}
 \AxiomC{$\Gamma \vdash B$}
 \RightLabel{$\wedge_i$}
-\BinaryInfC{$\Gamma\vdash A \wedge B$}
+\BinaryInfC{$\Gamma\vdash A \rightarrow B$}
 \end{prooftree}
 \end{defn}
 
