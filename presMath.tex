@@ -134,8 +134,6 @@ On dit que deux $\lambda$-termes sont équivalents quand ils se $\beta$-réduise
 \end{defn}
 \end{frame}
 
-\section{Transformation de Curry-Howard}
-
 \section{Théorie de la démonstration}
 \begin{frame}
 \frametitle{La notion de séquent}
@@ -349,6 +347,79 @@ On considère $\Gamma = \left\{\forall x~H(x)\rightarrow M(x), H(s)\right\}$
 C'est un syllogisme !
 
 \end{frame}
+
+
+\section{Transformation de Curry-Howard}
+
+\begin{frame}
+\frametitle{Une correspondance entre la logique et la programmation}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline 
+Logique & Programmation \\ 
+\hline 
+\hline
+Hilbert & Logique combinatoire \\ 
+\hline 
+Déduction naturelle & $\lambda$-calcul \\ 
+\hline 
+hypothèse & variable libre \\ 
+\hline 
+élimination de l'implication & application \\ 
+\hline 
+introduction de l'implication & abstraction \\
+\hline
+\end{tabular} 
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Une correspondance entre la logique et la programmation}
+
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{ax}
+\UnaryInfC{$\Gamma_1,\alpha\vdash\alpha$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{}
+\UnaryInfC{$\Gamma,x:\alpha\vdash x:\alpha$}
+\end{prooftree}
+\end{frame}
+
+\begin{frame}
+\frametitle{Une correspondance entre la logique et la programmation}
+
+\begin{prooftree}
+\AxiomC{$\Gamma,\alpha\vdash\beta$}
+\RightLabel{$\rightarrow_i$}
+\UnaryInfC{$\Gamma\vdash\alpha\rightarrow\beta$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\Gamma,x:\alpha\vdash t:\beta$}
+\UnaryInfC{$\Gamma\vdash \lambda .x:\alpha\rightarrow\beta$}
+\end{prooftree}
+\end{frame}
+
+\begin{frame}
+\frametitle{Une correspondance entre la logique et la programmation}
+
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash\alpha\rightarrow\beta$}
+\AxiomC{$\Gamma\vdash\alpha$}
+\RightLabel{$\rightarrow_e$}
+\BinaryInfC{$\Gamma\vdash\beta$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\Gamma\vdash t:\alpha\rightarrow\beta$}
+\AxiomC{$\Gamma\vdash x:\alpha$}
+\BinaryInfC{$\Gamma\vdash t x:\beta$}
+\end{prooftree}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Compcert - Introduction}
