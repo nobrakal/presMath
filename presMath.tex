@@ -134,6 +134,43 @@ On dit que deux $\lambda$-termes sont équivalents quand ils se $\beta$-réduise
 \end{defn}
 \end{frame}
 
+\begin{frame}{$\lambda$-calcul simplement typé - Le problème}
+Le $\lambda$-calcul tel qu'il a été défini pose un problème, des $\lambda$-termes comme:
+$$ \Omega = (\lambda x \ . \ xx) (\lambda x \ . \ xx) $$
+ne $\beta$-réduisent pas. On a donc envie d'introduire une notion de \emph{type}, comme on définit un ensemble de départ pour une fonction.
+\\
+(Note: Il est évident que le $\lambda$-calcul simplement typé est moins expressif que le $\lambda$-calcul simple)
+\end{frame}
+
+\begin{frame}{$\lambda$-calcul simplement typé - La solution (à la Curry)}
+\begin{defn}[Environnement]
+Un environnement $\Gamma$ est une suite de variables associées à un type: $$\Gamma = x_0:\sigma_0;...;x_n:\sigma_n$$
+\end{defn}
+\begin{defn}[jugement]
+Un jugement d'un lambda terme $M$ est l'affirmation de son type dans un environnement $\Gamma$:
+$$ \Gamma \vdash M : \sigma $$
+\end{defn}
+\end{frame}
+
+\begin{frame}{Les règles de typage}
+\begin{itemize}
+	\item  $ \Gamma = x:\sigma, \quad \Gamma \vdash x : \sigma $
+	\item  $ \Gamma = x:\sigma;M:\tau, \quad \Gamma \vdash \lambda x.M : \sigma \to \tau $
+	\item  $ \Gamma = M:\sigma \to \tau; N: \sigma, \quad \Gamma \vdash MN : \tau $
+\end{itemize}
+On voit que ce système permet de préserver une cohérence des $\lambda$-termes dans un certains environnement
+\end{frame}
+
+\begin{frame}{Quelques résultats}
+\begin{prop}
+La $\beta$-réduction préserve les types
+\end{prop}
+
+\begin{prop}[Normalisation forte]
+Toute $\beta$-réduction d'un $\lambda$-terme correctement typé termine
+\end{prop}
+\end{frame}
+
 \section{Théorie de la démonstration}
 \begin{frame}
 \frametitle{La notion de séquent}
