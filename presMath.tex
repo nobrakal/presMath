@@ -9,6 +9,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{bussproofs}
+\usepackage{hyperref}
 
 \theoremstyle{plain}
 \newtheorem{thm}{Théorème}[section]
@@ -30,6 +31,10 @@
 
 \begin{document}
 \maketitle
+
+\begin{frame}{Sommaire}
+\tableofcontents
+\end{frame}
 
 \section{Logique du premier ordre et d'ordre supérieur}
 \begin{frame}
@@ -457,9 +462,15 @@ introduction de l'implication & abstraction \\
 \end{prooftree}
 \end{frame}
 
+\section{Coq}
 
-\begin{frame}
-\frametitle{Compcert - Introduction}
+\begin{frame}{Introduction}
+
+\end{frame}
+
+\section{Compcert}
+
+\begin{frame}{Introduction}
 \begin{itemize}
 \item Compcert est un compilateur certifié pour le langage C\footnote{En fait, CompCert ne compile qu'une grande partie du C, appelée CLight}
 \item Compilateur: outil informatique traduisant un programme écrit dans un langage dans un autre langage
@@ -471,13 +482,21 @@ introduction de l'implication & abstraction \\
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{COQ à la rescousse}
+\begin{frame}{COQ à la rescousse}
 COQ a donc été utilisé dans CompCert de plusieurs manières
 \begin{itemize}
 	\item Comme langage de programmation
 	\item Comme langage de vérification
 	\item Comme langage exportable vers Caml
+\end{itemize}
+\end{frame}
+
+\section*{Sources}
+\begin{frame}
+\begin{itemize}
+	\item \url{https://coq.inria.fr/}
+	\item \url{http://compcert.inria.fr/}
+	\item \url{http://perso.ens-lyon.fr/pierre.lescanne/ENSEIGNEMENT/PROG2/06-07/lambda_types.pdf}
 \end{itemize}
 \end{frame}
 \end{document}
