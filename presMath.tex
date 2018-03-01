@@ -465,6 +465,17 @@ introduction de l'implication & abstraction \\
 \section{Coq}
 
 \begin{frame}{Introduction}
+Coq est un \emph{assistant de preuve} développé par l'INRIA. Grâce à une sémantique précise (le langage \emph{Gallina}) il permet l'automatisation de la vérification de preuves mathématiques via l'isomorphisme de Curry-Howard.\\
+Un de ses grands avantages est que Gallina est un langage fonctionnel, et donc qu'il permet aussi d'écrire des logiciels.
+\end{frame}
+
+\begin{frame}{Manque de Turing-complétude}
+\emph{Gallina} est un langage fonctionnel typé:
+\begin{itemize}
+	\item Tout programme est donc fortement normalisé
+	\item Donc tout programme termine
+	\item Docn \emph{Gallina} n'est pas Turing-complet
+\end{itemize}
 
 \end{frame}
 
@@ -487,7 +498,7 @@ COQ a donc été utilisé dans CompCert de plusieurs manières
 \begin{itemize}
 	\item Comme langage de programmation
 	\item Comme langage de vérification
-	\item Comme langage exportable vers Caml
+	\item Comme langage exportable vers OCaml
 \end{itemize}
 \end{frame}
 
