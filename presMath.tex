@@ -423,7 +423,7 @@ introduction de l'implication & abstraction \\
 \RightLabel{ax}
 \UnaryInfC{$\Gamma_1,\alpha\vdash\alpha$}
 \end{prooftree}
-
+$$  \Updownarrow $$
 \begin{prooftree}
 \AxiomC{}
 \UnaryInfC{$\Gamma,x:\alpha\vdash x:\alpha$}
@@ -438,7 +438,7 @@ introduction de l'implication & abstraction \\
 \RightLabel{$\rightarrow_i$}
 \UnaryInfC{$\Gamma\vdash\alpha\rightarrow\beta$}
 \end{prooftree}
-
+$$  \Updownarrow $$
 \begin{prooftree}
 \AxiomC{$\Gamma,x:\alpha\vdash t:\beta$}
 \UnaryInfC{$\Gamma\vdash \lambda .x:\alpha\rightarrow\beta$}
@@ -454,7 +454,7 @@ introduction de l'implication & abstraction \\
 \RightLabel{$\rightarrow_e$}
 \BinaryInfC{$\Gamma\vdash\beta$}
 \end{prooftree}
-
+$$  \Updownarrow $$
 \begin{prooftree}
 \AxiomC{$\Gamma\vdash t:\alpha\rightarrow\beta$}
 \AxiomC{$\Gamma\vdash x:\alpha$}
@@ -474,9 +474,17 @@ Un de ses grands avantages est que Gallina est un langage fonctionnel, et donc q
 \begin{itemize}
 	\item Tout programme est donc fortement normalisé
 	\item Donc tout programme termine
-	\item Docn \emph{Gallina} n'est pas Turing-complet
+	\item Donc \emph{Gallina} n'est pas Turing-complet\footnote{Un langage Turing-complet est un langage ayant autant d'expressivité qu'une machine de Turing}
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}{Utilisations}
+	\begin{itemize}
+		\item La preuve du théorème des 4 couleurs (2005)
+		\item La preuve du théorème de Feit et Thompson (2012)
+		\item Compcert...
+	\end{itemize}
 \end{frame}
 
 \section{Compcert}
