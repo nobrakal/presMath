@@ -10,6 +10,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{bussproofs}
+\usepackage{listing}
 \usepackage{hyperref}
 
 \theoremstyle{plain}
@@ -207,9 +208,9 @@ Un séquent $\Gamma \vdash F$ est \textbf{démontrable} s'il existe une démonst
 \begin{frame}
 \frametitle{Définition de démonstration formelle}
 \begin{defn}
-Une \textbf{démonstration} est un arbre ayant pour feuille des séquents.
+Une \textbf{démonstration} est un arbre étiqueté par des séquents.
 
-Tous les arbres de ce type ne sont bien sûr pas de démonstrations. On les construit l'ensemble des démonstration formelles par induction comme suit.
+Tous les arbres de ce type ne sont bien sûr pas de démonstrations. On les construit l'ensemble des démonstration formelles par induction en définissant des règles d'induction.
 \end{defn}
 \end{frame}
 
@@ -410,6 +411,23 @@ Un de ses grands avantages est que Gallina est un langage fonctionnel, et donc q
 		\item La preuve du théorème de Feit et Thompson (2012)
 		\item Compcert...
 	\end{itemize}
+\end{frame}
+
+\begin{frame}{Preuve de $A\rightarrow A$}
+\begin{lstlisting}[frame=single]
+intros A.
+intros H.
+case H.
+ intros proof_of_a.
+ intro proof_of_not_not_A.
+ exact proof_of_a.
+
+ intros not_a.
+ intros not_not_a.
+ intuition.
+
+Qed.
+\end{lstlisting}
 \end{frame}
 
 \section{Retour à Compcert}
