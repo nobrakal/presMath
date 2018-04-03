@@ -398,7 +398,7 @@ Un de ses grands avantages est que Gallina est un langage fonctionnel, et donc q
 \begin{frame}{Manque de Turing-complétude}
 \emph{Gallina} est un langage fonctionnel typé:
 \begin{itemize}
-	\item Tout programme est donc fortement normalisé
+	\item Tout programme est donc fortement normalisant
 	\item Donc tout programme termine
 	\item Donc \emph{Gallina} n'est pas Turing-complet\footnote{Un langage Turing-complet est un langage ayant autant d'expressivité qu'une machine de Turing}
 \end{itemize}
@@ -453,7 +453,7 @@ Soit $S$ le programme source et $C$ le programme compilé
 	\begin{itemize}
 		\item On veut que $C$ ai le même comportement que $S$
 		\item C'est une condition trop forte (Les compilateurs choisissent un ordre de calcul des expressions arithmétique parmi tous ceux possibles)
-		\item On va donc se concentrer sur: Si $S$ n'a pas de comportement mauvais, alors $C$ non plus
+		\item On va donc se concentrer sur: Si $S$ ne s'évalue pas en un comportement mauvais B, alors $C$ s'évalue aussi en B.
 	\end{itemize}
 \end{frame}
 
