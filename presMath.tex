@@ -414,8 +414,29 @@ Un de ses grands avantages est que Gallina est un langage fonctionnel, et donc q
 
 \section{Retour à Compcert}
 
-\begin{frame}{bla}
-	contenu...
+\begin{frame}{Comment c'est fait ?}
+	\begin{itemize}
+		\item Transforme le fichier en arbre de syntaxe abstrait (non-vérifié) de CMinor
+		\item Transforme cet arbre de syntaxe abstrait de CMinor en arbre de syntaxe PowerPC
+		\item On écrit le code assembleur correspondant
+	\end{itemize}
+Le tout est écrit \emph{ET} prouvé en Coq $\implies$ une preuve du simple compilateur, puisque la preuve est le programme.
+\end{frame}
+
+\begin{frame}{Les difficultés}
+	\begin{itemize}
+		\item Il faut spécifier rigoureusement les langages utilisés, en coq
+		\item Les compilateurs sont traditionnellement écrit de manière impérative, il faut raisonner de manière fonctionnelle.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Comment certifier un compilateur ?}
+Soit $S$ le programme source et $C$ le programme compilé 
+	\begin{itemize}
+		\item On veut que $C$ ai le même comportement que $S$
+		\item C'est une condition trop forte (Les compilateurs choisissent un ordre de calcul des expressions arithmétique parmi tous ceux possibles)
+		\item On va donc se concentrer sur: Si $S$ n'a pas de comportement mauvais, alors $C$ non plus
+	\end{itemize}
 \end{frame}
 
 \section*{Sources}
