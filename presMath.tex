@@ -37,6 +37,28 @@
 \tableofcontents
 \end{frame}
 
+\section{Compcert}
+
+\begin{frame}{Introduction}
+Les compilateurs sont des logiciels critiques:
+\begin{itemize}
+	\item Ils peuvent introduire des bugs...
+	\item Très difficile à trouver et à corriger.
+	\item Et on ne peut pas se passer de leur utilisation!
+\end{itemize}
+L'idée (un peu folle) est donc d'essayer de les \emph{certifier} mathématiquement
+\end{frame}
+
+\begin{frame}{COQ à la rescousse}
+Plus généralement, il est bon d'avoir des logiciels prouvés mathématiquement, et pour cela, des assistants de preuves existent. Par exemple COQ, que l'on peut utiliser comme:
+\begin{itemize}
+\item Comme langage de programmation
+\item Comme langage de vérification
+\item Comme langage exportable vers OCaml
+\end{itemize}
+Mais comment ça marche ? Sur quelles bases mathématiques ?
+\end{frame}
+
 \section{Logique du premier ordre et d'ordre supérieur}
 \begin{frame}
 \frametitle{Logique d'ordre supérieur}
@@ -424,7 +446,7 @@ introduction de l'implication & abstraction \\
 \RightLabel{ax}
 \UnaryInfC{$\Gamma_1,\alpha\vdash\alpha$}
 \end{prooftree}
-
+$$  \Updownarrow $$
 \begin{prooftree}
 \AxiomC{}
 \UnaryInfC{$\Gamma,x:\alpha\vdash x:\alpha$}
@@ -439,7 +461,7 @@ introduction de l'implication & abstraction \\
 \RightLabel{$\rightarrow_i$}
 \UnaryInfC{$\Gamma\vdash\alpha\rightarrow\beta$}
 \end{prooftree}
-
+$$  \Updownarrow $$
 \begin{prooftree}
 \AxiomC{$\Gamma,x:\alpha\vdash t:\beta$}
 \UnaryInfC{$\Gamma\vdash \lambda .x:\alpha\rightarrow\beta$}
@@ -455,7 +477,7 @@ introduction de l'implication & abstraction \\
 \RightLabel{$\rightarrow_e$}
 \BinaryInfC{$\Gamma\vdash\beta$}
 \end{prooftree}
-
+$$  \Updownarrow $$
 \begin{prooftree}
 \AxiomC{$\Gamma\vdash t:\alpha\rightarrow\beta$}
 \AxiomC{$\Gamma\vdash x:\alpha$}
@@ -475,32 +497,23 @@ Un de ses grands avantages est que Gallina est un langage fonctionnel, et donc q
 \begin{itemize}
 	\item Tout programme est donc fortement normalisé
 	\item Donc tout programme termine
-	\item Docn \emph{Gallina} n'est pas Turing-complet
+	\item Donc \emph{Gallina} n'est pas Turing-complet\footnote{Un langage Turing-complet est un langage ayant autant d'expressivité qu'une machine de Turing}
 \end{itemize}
 
 \end{frame}
 
-\section{Compcert}
-
-\begin{frame}{Introduction}
-\begin{itemize}
-\item Compcert est un compilateur certifié pour le langage C\footnote{En fait, CompCert ne compile qu'une grande partie du C, appelée CLight}
-\item Compilateur: outil informatique traduisant un programme écrit dans un langage dans un autre langage
-\begin{itemize}
-	\item Très complexe (surtout avec de l'optimisation)
-	\item Donc beaucoup de bugs...
-\end{itemize}
-\item L'idée est donc de \emph{certifier} mathématiquement ce logiciel si critique
-\end{itemize}
+\begin{frame}{Utilisations}
+	\begin{itemize}
+		\item La preuve du théorème des 4 couleurs (2005)
+		\item La preuve du théorème de Feit et Thompson (2012)
+		\item Compcert...
+	\end{itemize}
 \end{frame}
 
-\begin{frame}{COQ à la rescousse}
-COQ a donc été utilisé dans CompCert de plusieurs manières
-\begin{itemize}
-	\item Comme langage de programmation
-	\item Comme langage de vérification
-	\item Comme langage exportable vers OCaml
-\end{itemize}
+\section{Retour à Compcert}
+
+\begin{frame}{bla}
+	contenu...
 \end{frame}
 
 \section*{Sources}
