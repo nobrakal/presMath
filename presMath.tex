@@ -1,4 +1,3 @@
-
 \documentclass[11pt,a4paper]{beamer}
 
 \usetheme{metropolis}
@@ -41,21 +40,19 @@
 \section{Compcert}
 
 \begin{frame}{Introduction}
-Les compilateurs sont des logiciels critiques:
+Pourquoi s'amuser à \textit{certifier} un compilateur ?
 \begin{itemize}
-	\item Ils peuvent introduire des bugs...
-	\item Très difficile à trouver et à corriger.
-	\item Et on ne peut pas se passer de leur utilisation!
+	\item Ils peuvent introduire des bugs.
+	\item Ils sont \textbf{indispensables}!
 \end{itemize}
-L'idée (un peu folle) est donc d'essayer de les \emph{certifier} mathématiquement
 \end{frame}
 
 \begin{frame}{COQ à la rescousse}
-Plus généralement, il est bon d'avoir des logiciels prouvés mathématiquement, et pour cela, des assistants de preuves existent. Par exemple COQ, que l'on peut utiliser comme:
+Coq est:
 \begin{itemize}
-\item Comme langage de programmation
-\item Comme langage de vérification
-\item Comme langage exportable vers OCaml
+\item Un langage de programmation fonctionnelle pur.
+\item Un assistant de preuves.
+\item Un langage exportable vers OCaml.
 \end{itemize}
 Mais comment ça marche ? Sur quelles bases mathématiques ?
 \end{frame}
@@ -63,9 +60,8 @@ Mais comment ça marche ? Sur quelles bases mathématiques ?
 \section{Logique du premier ordre et d'ordre supérieur}
 \begin{frame}
 \frametitle{Logique d'ordre supérieur}
-Logique du premier ordre permet de quantifier seulement des objets du premier ordres (variables, constantes) mais pas des objets comme des ensembles, des groupes,etc... qui sont d'ordre supérieur.
-\newline
-\newline
+$$\forall x\forall y (=(+(x,y),+(y,x))$$
+
 ``Toute partie non vide de $\mathbb{N}$ admet un plus petit élément``:
 \[ \forall X \left(\neg =(X, \emptyset)\rightarrow\exists p~(X(p)\wedge\forall n~(X(n)\rightarrow \leq(p, n)))\right)\]
 \end{frame}
@@ -137,11 +133,10 @@ On dit que deux $\lambda$-termes sont équivalents quand ils se $\beta$-réduise
 \end{frame}
 
 \begin{frame}{$\lambda$-calcul simplement typé - Le problème}
-Le $\lambda$-calcul tel qu'il a été défini pose un problème, des $\lambda$-termes comme:
+$$ Y = \lambda f . (\lambda x. f (xx)) (\lambda x.f (xx))$$
 $$ \Omega = (\lambda x \ . \ xx) (\lambda x \ . \ xx) $$
-ne $\beta$-réduisent pas. On a donc envie d'introduire une notion de \emph{type}, comme on définit un ensemble de départ pour une fonction.
-\\
-(Note: Il est évident que le $\lambda$-calcul simplement typé est moins expressif que le $\lambda$-calcul simple)
+
+Certains termes ne se $\beta$-réduisent pas.
 \end{frame}
 
 \begin{frame}{$\lambda$-calcul simplement typé - La solution (à la Curry)}
@@ -430,6 +425,16 @@ let a_implies_a h = h
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Preuve de $A\rightarrow A$}
+\begin{lstlisting}[frame=single]
+Theorem a_implies_a: forall A, A -> A.
+Proof.
+intros A.
+exact (fun (t:A) => t).
+Qed.
+\end{lstlisting}
+\end{frame}
+
 \section{Retour à Compcert}
 
 \begin{frame}{Comment c'est fait ?}
@@ -453,7 +458,7 @@ Soit $S$ le programme source et $C$ le programme compilé
 	\begin{itemize}
 		\item On veut que $C$ ai le même comportement que $S$
 		\item C'est une condition trop forte (Les compilateurs choisissent un ordre de calcul des expressions arithmétique parmi tous ceux possibles)
-		\item On va donc se concentrer sur: Si $S$ ne s'évalue pas en un comportement mauvais B, alors $C$ s'évalue aussi en B.
+		\item On va donc se concentrer sur: Si $S$ ne s'évalue pas en un comportement mauvais, alors $C$ a le même comportement que $S$.
 	\end{itemize}
 \end{frame}
 
