@@ -35,10 +35,10 @@ Proof.
   apply orb_prop_elim in H.
   case H.
     - intros n_a.
-    rewrite eq_nat_is_eq in H0.
     apply isTrueEq in n_a.
     apply beq_nat_true in n_a.
     contradict n_a.
+    rewrite eq_nat_is_eq in H0.
     exact (not_eq_sym H0).
     - intros ok. exact ok.
 Qed.
@@ -48,8 +48,7 @@ Proof.
   split.
   - induction lst.
     -- simpl.
-      intros proof_of_False.
-      case proof_of_False. 
+      intros false. exact false. 
 
     -- intros ou.
       case ou.
@@ -70,22 +69,22 @@ Proof.
         refine (or_intror _).
         exact in_n.
 
-    - induction lst.
-      -- simpl.
-        intros false. exact false.
+  - induction lst.
+    -- simpl.
+      intros false. exact false.
 
-      -- intros H.
-        case (classic (eq_nat a n)).
-        --- intros a_n.
-            simpl.
-            apply eq_nat_is_eq in a_n.
-            refine (or_introl _).
-            exact (a_n).
-        --- intros na_n.
-            simpl.
-            refine (or_intror _).
-            apply IHlst.
-            apply inTail in H.
-            exact H.
-            exact na_n.
+    -- intros H.
+      case (classic (eq_nat a n)).
+      --- intros a_n.
+          simpl.
+          apply eq_nat_is_eq in a_n.
+          refine (or_introl _).
+          exact (a_n).
+      --- intros na_n.
+          simpl.
+          refine (or_intror _).
+          apply IHlst.
+          apply inTail in H.
+          exact H.
+          exact na_n.
 Qed.
