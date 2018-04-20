@@ -28,6 +28,21 @@ Proof.
   - apply Is_true_eq_left.
 Qed.
 
+Lemma inTail (n:nat) (a:nat) (lst:list nat): Is_true (search n (a::lst)) -> ~ eq_nat a n ->  Is_true (search n lst).
+Proof.
+  intros.
+  rewrite recSearch in H.
+  apply orb_prop_elim in H.
+  case H.
+    - intros n_a.
+    rewrite eq_nat_is_eq in H0.
+    apply isTrueEq in n_a.
+    apply beq_nat_true in n_a.
+    contradict n_a.
+    exact (not_eq_sym H0).
+    - intros ok. exact ok.
+Qed.
+
 Theorem search_ok (n: nat) (lst: list nat): In n lst <-> Is_true (search n lst).
 Proof.
   split.
@@ -69,6 +84,8 @@ Proof.
         --- intros na_n.
             simpl.
             refine (or_intror _).
-
-      
+            apply IHlst.
+            apply inTail in H.
+            exact H.
+            exact na_n.
 Qed.
