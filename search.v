@@ -1,8 +1,6 @@
-Require Import Nat.
 Require Import Arith.EqNat.
 Require Import Bool.
 Require Import List.
-Require Import Logic.Classical_Prop.
 
 Fixpoint search (n : nat) (lst : list nat) := 
   match lst with
@@ -28,7 +26,7 @@ Proof.
   - apply Is_true_eq_left.
 Qed.
 
-Lemma inTail (n:nat) (a:nat) (lst:list nat): Is_true (search n (a::lst)) -> ~ eq_nat a n ->  Is_true (search n lst).
+Lemma inTail (n:nat) (a:nat) (lst:list nat): Is_true (search n (a::lst)) -> a <> n ->  Is_true (search n lst).
 Proof.
   intros.
   rewrite recSearch in H.
@@ -38,17 +36,26 @@ Proof.
     apply isTrueEq in n_a.
     apply beq_nat_true in n_a.
     contradict n_a.
-    rewrite eq_nat_is_eq in H0.
     exact (not_eq_sym H0).
     - intros ok. exact ok.
 Qed.
+
+(* Copied from Arith.PeanoNat, as my coq can find it *)
+Lemma eq_dec : forall n m : nat, {n = m} + {n <> m}.
+Proof.
+  induction n; destruct m.
+  - now left.
+  - now right.
+  - now right.
+  - destruct (IHn m); [left|right]; auto.
+Defined.
 
 Theorem search_ok (n: nat) (lst: list nat): In n lst <-> Is_true (search n lst).
 Proof.
   split.
   - induction lst.
     -- simpl.
-      intros false. exact false. 
+      intros false. exact false.
 
     -- intros ou.
       case ou.
@@ -74,10 +81,9 @@ Proof.
       intros false. exact false.
 
     -- intros H.
-      case (classic (eq_nat a n)).
+      case (eq_dec a n).
       --- intros a_n.
           simpl.
-          apply eq_nat_is_eq in a_n.
           refine (or_introl _).
           exact (a_n).
       --- intros na_n.
