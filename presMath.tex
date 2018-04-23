@@ -54,6 +54,8 @@ Coq est:
 \item Un assistant de preuves.
 \item Un langage exportable vers OCaml.
 \end{itemize}
+Coq permet d'écrire le compilateur et de le prouver en même temps.
+
 Mais comment ça marche ? Sur quelles bases mathématiques ?
 \end{frame}
 
@@ -74,9 +76,15 @@ On choisit $\mathcal{S}_0$ qu'on appellera \textit{ensemble de sortes de base} e
 \[ \mathcal{S} = o~|~\mathcal{S}_0~|~\mathcal{S}\rightarrow\mathcal{S} \]
 \end{defn}
 
+\begin{rem}
+La sorte particulière $o$ est la sorte des formules.
+La sorte de base $\mathcal{S}_0$ est l'ensemble des sortes quantifiable.
+\end{rem}
+
 \begin{exmp}
 Un langage d'ordre supérieur pour décrire l'arithmétique contiendrait le couple
 \[ \left(+, \omega \rightarrow \omega \rightarrow \omega\right) \]
+où $\omega$ est la sorte des entiers
 \end{exmp}
 \end{frame}
 
@@ -91,7 +99,7 @@ Deux expressions sont \textbf{$\beta$-équivalentes} si elles se $\beta$-réduis
 \end{defn}
 
 \begin{thm}
-Toute expression est égale à une unique expression ne contenant pas de sous expressions de la forme $(x\rightarrow t)(u)$
+Toute expression est $\beta$-équivalente à une unique expression ne contenant pas de sous expressions de la forme $(x\rightarrow t)(u)$
 \end{thm}
 \end{frame}
 
@@ -460,7 +468,7 @@ Le tout est écrit \emph{ET} prouvé en Coq $\implies$ une preuve du simple comp
 \begin{frame}{Comment certifier un compilateur ?}
 Soit $S$ le programme source et $C$ le programme compilé 
 	\begin{itemize}
-		\item On veut que $C$ ai le même comportement que $S$
+		\item On veut que $C$ ait le même comportement que $S$
 		\item C'est une condition trop forte (Les compilateurs choisissent un ordre de calcul des expressions arithmétique parmi tous ceux possibles)
 		\item On va donc se concentrer sur: Si $S$ ne s'évalue pas en un comportement mauvais, alors $C$ a le même comportement que $S$.
 	\end{itemize}
