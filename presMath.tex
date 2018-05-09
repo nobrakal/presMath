@@ -11,6 +11,9 @@
 \usepackage{bussproofs}
 \usepackage{listings}
 \usepackage{hyperref}
+%For automata
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
 
 \theoremstyle{plain}
 \newtheorem{thm}{Théorème}[section]
@@ -442,11 +445,19 @@ Qed.
 \section{Retour à Compcert}
 
 \begin{frame}{Comment c'est fait ?}
-	\begin{itemize}
-		\item Transforme le fichier en arbre de syntaxe abstrait (non-vérifié) de CMinor
-		\item Transforme cet arbre de syntaxe abstrait de CMinor en arbre de syntaxe PowerPC
-		\item On écrit le code assembleur correspondant
-	\end{itemize}
+\begin{center}
+	\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+	\node[state,initial] (eq_0)   {C};
+	\node[state] (eq_1) [right=of eq_0] {CMinor};
+	\node[state] (eq_2) [right=of eq_1] {PowerPC};
+	\node[state] (eq_3) [right=of eq_2] {Assembleur};
+	\path[->]
+	(eq_0) edge node {} (eq_1)
+	(eq_1) edge node {} (eq_2)
+	(eq_2) edge node {} (eq_3);
+	\end{tikzpicture}
+\end{center}
+
 Le tout est écrit \emph{ET} prouvé en Coq $\implies$ une preuve du simple compilateur, puisque la preuve est le programme.
 \end{frame}
 
@@ -458,11 +469,11 @@ Le tout est écrit \emph{ET} prouvé en Coq $\implies$ une preuve du simple comp
 \end{frame}
 
 \begin{frame}{Comment certifier un compilateur ?}
-Soit $S$ le programme source et $C$ le programme compilé 
+Soit $S$ le programme source et $C$ le programme compilé. On note $ S \Downarrow B$ si $S$ a le comportement $B$.
 	\begin{itemize}
-		\item On veut que $C$ ai le même comportement que $S$
-		\item C'est une condition trop forte (Les compilateurs choisissent un ordre de calcul des expressions arithmétique parmi tous ceux possibles)
-		\item On va donc se concentrer sur: Si $S$ ne s'évalue pas en un comportement mauvais, alors $C$ a le même comportement que $S$.
+		\item On veut que: $\forall B, S \Downarrow B \iff C \Downarrow B$
+		\item C'est une condition trop forte (les compilateurs optimisent le code)
+		\item On va donc se concentrer sur: $\forall B \notin Wrong, S \Downarrow B \implies C \Downarrow B$
 	\end{itemize}
 \end{frame}
 
