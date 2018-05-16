@@ -257,7 +257,7 @@ Pour toute théorie $\Gamma$ et formules $A, B$
 \AxiomC{$\Gamma\vdash A$}
 \AxiomC{$\Gamma \vdash B$}
 \RightLabel{$\wedge_i$}
-\BinaryInfC{$\Gamma\vdash A \rightarrow B$}
+\BinaryInfC{$\Gamma\vdash A \wedge B$}
 \end{prooftree}
 \end{defn}
 
@@ -322,7 +322,6 @@ C'est un syllogisme !
 
 \end{frame}
 
-
 \section{Transformation de Curry-Howard}
 
 \begin{frame}
@@ -373,7 +372,7 @@ $$  \Updownarrow $$
 $$  \Updownarrow $$
 \begin{prooftree}
 \AxiomC{$\Gamma,x:\alpha\vdash t:\beta$}
-\UnaryInfC{$\Gamma\vdash \lambda .x:\alpha\rightarrow\beta$}
+\UnaryInfC{$\Gamma\vdash \lambda x.t:\alpha\rightarrow\beta$}
 \end{prooftree}
 \end{frame}
 
